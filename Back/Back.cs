@@ -10,7 +10,7 @@ namespace Back {
     public class Back : TerrariaPlugin {
         public override string Name => "Back";
         public override string Author => "Melton";
-        public override Version Version => new Version(1, 0, 0);
+        public override Version Version => new Version(1, 0, 1);
         public override string Description => "Teleports you back to the last death you are on";
 
         Dictionary<string, (Vector2 position, string reason)> playerDeathData = new Dictionary<string, (Vector2, string)>();
@@ -21,6 +21,7 @@ namespace Back {
         public override void Initialize()
         {
             Commands.ChatCommands.Add(new Command("back.back", BackCommand, "back"));
+            Commands.ChatCommands.Add(new Command("back.deathinfo", BackCommand, "deathinfo"));
             ServerApi.Hooks.NetGetData.Register(this, OnNetGetData);
         }
 
@@ -29,6 +30,7 @@ namespace Back {
             if (disposing)
             {
                 Commands.ChatCommands.Remove(new Command("back.back", BackCommand, "back"));
+                Commands.ChatCommands.Remove(new Command("back.deathinfo", BackCommand, "deathinfo"));
                 ServerApi.Hooks.NetGetData.Deregister(this, OnNetGetData);
             }
 
@@ -54,6 +56,10 @@ namespace Back {
                     var deathReasonText = deathReason.GetDeathText(player.name).ToString();
 
                     playerDeathData[player.name] = (deathPosition, deathReasonText);
+                    if (player == null)
+                    {
+                        playerDeathData.Remove(player.name);
+                    }
                 }
             }
         }
@@ -61,7 +67,7 @@ namespace Back {
         private void BackCommand(CommandArgs args)
         {
             var player = args.Player;
-            if (player == null || player.Active || player.RealPlayer) return;
+            if (player == null || !player.Active || !player.RealPlayer) return;
             if (player.Dead)
             {
                 player.SendErrorMessage("You can't use this command while dead.");
@@ -71,11 +77,24 @@ namespace Back {
             if (playerDeathData.TryGetValue(player.Name, out var deathData))
             {
                 player.Teleport(deathData.position.X, deathData.position.Y);
-                player.SendSuccessMessage($"You have been teleported back to your death location with the reason: {deathData.reason}");
+                player.SendSuccessMessage($"You have been teleported back to your death location.");
             }
             else
             {
                 player.SendErrorMessage("No death location found.");
+            }
+        }
+
+        private void DeathInfoCommand(CommandArgs args)
+        {
+            var player = args.Player;
+            if (player == null || !player.Active || !player.RealPlayer) return;               if (playerDeathData.TryGetValue(player.Name, out var deathData))
+            {
+                player.SendInfoMessage("Death reason: " + deathData.reason);
+            }
+            else
+            {
+                player.SendErrorMessage("No death reason found.");
             }
         }
     }
