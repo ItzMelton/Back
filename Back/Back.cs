@@ -88,7 +88,8 @@ namespace Back {
         private void DeathInfoCommand(CommandArgs args)
         {
             var player = args.Player;
-            if (player == null || !player.Active || !player.RealPlayer) return;               if (playerDeathData.TryGetValue(player.Name, out var deathData))
+            if (player == null || !player.Active || !player.RealPlayer) return;
+            if (playerDeathData.TryGetValue(player.Name, out var deathData))
             {
                 player.SendInfoMessage("Death reason: " + deathData.reason);
             }
