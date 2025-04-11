@@ -21,7 +21,6 @@ namespace Back {
         public override void Initialize()
         {
             Commands.ChatCommands.Add(new Command("back.back", BackCommand, "back"));
-            Commands.ChatCommands.Add(new Command("back.deathinfo", BackCommand, "deathinfo"));
             ServerApi.Hooks.NetGetData.Register(this, OnNetGetData);
         }
 
@@ -30,7 +29,6 @@ namespace Back {
             if (disposing)
             {
                 Commands.ChatCommands.Remove(new Command("back.back", BackCommand, "back"));
-                Commands.ChatCommands.Remove(new Command("back.deathinfo", BackCommand, "deathinfo"));
                 ServerApi.Hooks.NetGetData.Deregister(this, OnNetGetData);
             }
 
@@ -53,9 +51,8 @@ namespace Back {
 
                     var player = Main.player[playerID];
                     var deathPosition = new Vector2(player.position.X, player.position.Y);
-                    var deathReasonText = deathReason.GetDeathText(player.name).ToString();
 
-                    playerDeathData[player.name] = (deathPosition, deathReasonText);
+                    playerDeathData[player.name] = (deathPosition);
                     if (player == null)
                     {
                         playerDeathData.Remove(player.name);
