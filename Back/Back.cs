@@ -10,7 +10,7 @@ namespace Back {
     public class Back : TerrariaPlugin {
         public override string Name => "Back";
         public override string Author => "Melton";
-        public override Version Version => new Version(1, 0, 1);
+        public override Version Version => new Version(1, 0, 0);
         public override string Description => "Teleports you back to the last death you are on";
 
         Dictionary<string, (Vector2 position, string reason)> playerDeathData = new Dictionary<string, (Vector2, string)>();
