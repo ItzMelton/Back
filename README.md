@@ -1,5 +1,5 @@
 # Back
-A Tshock plugin that teleports you back to your last death point
+A Tshock plugin that teleports you back to your last death position
 
 ## How to Install
 1. Download the `.dll` file.
@@ -7,7 +7,7 @@ A Tshock plugin that teleports you back to your last death point
 3. Stop and rerun the server.
 
 ## Versions
-Back v1.0.1
+Back v1.0.1 (Latest)
 
 ## Instructions
 ### Commands
