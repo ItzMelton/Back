@@ -11,9 +11,9 @@ namespace Back {
         public override string Name => "Back";
         public override string Author => "Melton";
         public override Version Version => new Version(1, 0, 1);
-        public override string Description => "Teleports you back to the last death you are on";
+        public override string Description => "Teleports you back to your last death location";
 
-        Dictionary<string, (Vector2 position, string reason)> playerDeathData = new Dictionary<string, (Vector2, string)>();
+        Dictionary<string, Vector2> playerDeathData = new Dictionary<string, Vector2>();
 
         public Back(Main game) : base(game)
         {}
@@ -44,19 +44,17 @@ namespace Back {
                  using (BinaryReader br = new(new MemoryStream(args.Msg.readBuffer, args.Index, args.Length)))
                 {
                     byte playerID = br.ReadByte();
-                    PlayerDeathReason deathReason = PlayerDeathReason.FromReader(br);
+                    PlayerDeathReason.FromReader(br);
                     br.ReadInt16();
                     br.ReadByte();
                     br.ReadByte();
 
                     var player = Main.player[playerID];
-                    var deathPosition = new Vector2(player.position.X, player.position.Y);
 
-                    playerDeathData[player.name] = (deathPosition);
-                    if (player == null)
-                    {
-                        playerDeathData.Remove(player.name);
-                    }
+                    if (player == null) return;
+                    
+                    var deathPosition = new Vector2(player.position.X, player.position.Y);
+                    playerDeathData[player.name] = deathPosition;
                 }
             }
         }
@@ -71,9 +69,9 @@ namespace Back {
                 return;
             }
             
-            if (playerDeathData.TryGetValue(player.Name, out var deathData))
+            if (playerDeathData.TryGetValue(player.Name, out var deathPosition))
             {
-                player.Teleport(deathData.position.X, deathData.position.Y);
+                player.Teleport(deathPosition.X, deathPosition.Y);
                 player.SendSuccessMessage($"You have been teleported back to your death location.");
             }
             else

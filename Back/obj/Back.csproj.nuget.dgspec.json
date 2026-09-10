@@ -1,0 +1,79 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/melton/Back/Back/Back.csproj": {}
+  },
+  "projects": {
+    "/home/melton/Back/Back/Back.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/melton/Back/Back/Back.csproj",
+        "projectName": "Back",
+        "projectPath": "/home/melton/Back/Back/Back.csproj",
+        "packagesPath": "/home/melton/.nuget/packages/",
+        "outputPath": "/home/melton/Back/Back/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/melton/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net9.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net9.0": {
+            "targetAlias": "net9.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.100"
+      },
+      "frameworks": {
+        "net9.0": {
+          "targetAlias": "net9.0",
+          "dependencies": {
+            "TShock": {
+              "target": "Package",
+              "version": "[6.1.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.19, 9.0.19]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/9.0.120/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
