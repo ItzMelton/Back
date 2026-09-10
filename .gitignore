@@ -1,0 +1,3 @@
+obj/
+bin/Debug/net9.0/*.deps.json
+bin/Debug/net9.0/HttpServer.dll
